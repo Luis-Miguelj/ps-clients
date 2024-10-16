@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Clients {
+  id        String    @id @default(uuid())
+  name      String
+  city      String
+  status    String
+  completed Boolean
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  Tasks     Tasks[]
+}
+
+model Tasks {
+  id                   String                 @id @default(uuid())
+  description          String
+  obs                  String?
+  types                String
+  status               String
+  completed            Boolean
+  createdAt            DateTime               @default(now()) @map("created_at")
+  updatedAt            DateTime?              @map("updated_at")
+  clientId             String
+  client               Clients                @relation(fields: [clientId], references: [id])
+  TransitoInicioDeObra TransitoInicioDeObra[]
+  TransitoFinalDeObra  TransitoFinalDeObra[]
+}
+
+model TransitoInicioDeObra {
+  id      String   @id @default(uuid())
+  incio   DateTime @default(now()) @map("inicio")
+  fim     DateTime @map("chegada")
+  tasksId String?
+  Tasks   Tasks?   @relation(fields: [tasksId], references: [id])
+}
+
+model TransitoFinalDeObra {
+  id      String   @id @default(uuid())
+  incio   DateTime @default(now()) @map("inicio")
+  fim     DateTime @map("chegada")
+  tasksId String?
+  Tasks   Tasks?   @relation(fields: [tasksId], references: [id])
+}

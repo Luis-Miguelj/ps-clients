@@ -1,0 +1,13 @@
+POST http://localhost:3005/client
+Content-Type: application/json
+
+{
+    "name": "Client 1",
+    "city": "City 1",
+    "status": "Status 1",
+    "completed": true
+}
+
+###
+GET http://localhost:3005/client
+Content-Type: application/json
