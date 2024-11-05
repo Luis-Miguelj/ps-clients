@@ -12,6 +12,8 @@ export const updateClientSchema = z.object({
   status: z.string().optional(),
   completed: z.boolean().optional(),
   updatedAt: z.date().optional(),
+  name: z.string().optional(),
+  city: z.string().optional(),
 })
 
 export type updateClient = z.infer<typeof updateClientSchema>

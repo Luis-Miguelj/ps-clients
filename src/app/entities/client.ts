@@ -45,7 +45,8 @@ export class Client {
   }
 
   async updateClient(data: updateClient) {
-    const { id, status, completed, updatedAt } = updateClientSchema.parse(data)
+    const { id, status, completed, updatedAt, city, name } =
+      updateClientSchema.parse(data)
 
     const verifyClient = await prisma.clients.findUnique({
       where: {
@@ -67,6 +68,8 @@ export class Client {
         status,
         completed,
         updatedAt,
+        city,
+        name,
       },
     })
 

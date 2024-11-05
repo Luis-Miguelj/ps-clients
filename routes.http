@@ -11,3 +11,13 @@ Content-Type: application/json
 ###
 GET http://localhost:3005/client
 Content-Type: application/json
+
+###
+PUT http://localhost:3005/update-task/f8e4662d-5155-4c93-8969-f04d0df17566
+Content-Type: application/json
+
+{
+  "clientId": "1bd6c71c-8f09-48b0-b3ba-fa7472d20bfa",
+  "types": "Manutenção",
+  "obs": "O inversor queimou durante uma chuva de raios"
+}

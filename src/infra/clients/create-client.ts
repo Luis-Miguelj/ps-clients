@@ -9,11 +9,34 @@ export const createClient = server.post(
   async ({ body, error }) => {
     const { name, city, completed, status } = body
 
+    const statusOptions = await new Promise<string>((resolve, reject) => {
+      switch (status) {
+        case 'a':
+          resolve('Em andamento')
+          break
+        case 'c':
+          resolve('Completo')
+          break
+        case 'i':
+          resolve('Incompleto')
+          break
+        default:
+          reject('Status inválido')
+      }
+    })
+
+    if (statusOptions === 'Status inválido') {
+      return {
+        status: error(400),
+        error: statusOptions,
+      }
+    }
+
     const createClient = await client.createClient({
       name,
       city,
       completed,
-      status,
+      status: statusOptions,
     })
 
     if (createClient.error) {
