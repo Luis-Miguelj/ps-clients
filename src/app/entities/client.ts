@@ -31,7 +31,11 @@ export class Client {
   }
 
   async getClients() {
-    const clients = await prisma.clients.findMany()
+    const clients = await prisma.clients.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
 
     if (!clients) {
       return {
@@ -81,6 +85,24 @@ export class Client {
 
     return {
       update_client: update,
+    }
+  }
+
+  async getClientById(id: string) {
+    const client = await prisma.clients.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!client) {
+      return {
+        error: 'Cliente não encontrado',
+      }
+    }
+
+    return {
+      client,
     }
   }
 }

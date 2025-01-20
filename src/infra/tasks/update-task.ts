@@ -1,9 +1,11 @@
 import { server } from '@/utils/server'
 import { Tasks } from '@/app/entities/tasks'
+import { Select } from '@/functions/select'
 
 import { error, t } from 'elysia'
 
 const tasks = new Tasks()
+const select = new Select()
 
 export const updateTask = server.put(
   '/update-task/:id',
@@ -11,23 +13,6 @@ export const updateTask = server.put(
     const { id } = params
     const { clientId, completed, description, obs, status, types, updatedAt } =
       body
-
-    const typesTasks = await new Promise<string>((resolve, reject) => {
-      switch (types) {
-        case 'm':
-          resolve('Manutenção')
-          break
-        case 'i':
-          resolve('Instalação')
-          break
-        case 'o':
-          resolve('O&M')
-          break
-        default:
-          reject('Tipo de tarefa inválida')
-          break
-      }
-    })
 
     !id && {
       status: error(400),
@@ -39,28 +24,112 @@ export const updateTask = server.put(
       error: 'Id do cliente não foi informado.',
     }
 
-    const update = await tasks.updateTask(
-      {
-        description,
-        completed,
-        obs,
-        status,
-        types: typesTasks,
-        updatedAt,
-      },
-      id,
-      clientId
-    )
+    const typesSelected = select.selectTypes(types as string)
+    const statusSelected = select.selectStatus(status as string)
 
-    if (update.error) {
+    if (!typesSelected && !statusSelected) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
       return {
-        status: error(400),
-        error: update.error,
+        message: update.message,
+      }
+    }
+
+    if (!typesSelected && statusSelected) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          status: statusSelected,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
+      return {
+        message: update.message,
+      }
+    }
+
+    if (typesSelected && !statusSelected) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          types: typesSelected,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
+      return {
+        message: update.message,
+      }
+    }
+
+    if (typesSelected && statusSelected) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          status: statusSelected,
+          types: typesSelected,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
+      return {
+        message: update.message,
       }
     }
 
     return {
-      message: update.message,
+      message: 'Algo deu errado.',
+      error: 'Não caiu em nenhuma das validações.',
     }
   },
   {

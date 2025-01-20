@@ -1,0 +1,51 @@
+if (!types) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          status,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
+      return {
+        message: update.message,
+      }
+    }
+
+
+if (!types) {
+      const update = await tasks.updateTask(
+        {
+          description,
+          completed,
+          obs,
+          types: typesTasks,
+          status: statusTask,
+          updatedAt,
+        },
+        id,
+        clientId
+      )
+
+      if (update.error) {
+        return {
+          status: error(400),
+          error: update.error,
+        }
+      }
+
+      return {
+        message: update.message,
+      }
+    }

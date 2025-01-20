@@ -13,11 +13,12 @@ GET http://localhost:3005/client
 Content-Type: application/json
 
 ###
-PUT http://localhost:3005/update-task/f8e4662d-5155-4c93-8969-f04d0df17566
+PUT http://localhost:3005/update-task/087da0f0-9470-4ac4-bb5f-9ef448b8537e
 Content-Type: application/json
 
 {
-  "clientId": "1bd6c71c-8f09-48b0-b3ba-fa7472d20bfa",
-  "types": "Manutenção",
-  "obs": "O inversor queimou durante uma chuva de raios"
+  "clientId": "ba6f7471-5b2d-4242-bc89-b49a215b5eaf",
+  "types": "m",
+  "obs": "",
+  "description": "Limpeza de placas e verificação de conexões"
 }

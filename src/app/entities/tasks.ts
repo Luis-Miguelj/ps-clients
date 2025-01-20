@@ -59,6 +59,9 @@ export class Tasks {
       where: {
         clientId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     if (!tasks) {

@@ -6,7 +6,7 @@ CREATE TABLE "Clients" (
     "status" TEXT NOT NULL,
     "completed" BOOLEAN NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "Clients_pkey" PRIMARY KEY ("id")
 );
@@ -15,12 +15,12 @@ CREATE TABLE "Clients" (
 CREATE TABLE "Tasks" (
     "id" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "obs" TEXT NOT NULL,
+    "obs" TEXT,
     "types" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "completed" BOOLEAN NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "updated_at" TIMESTAMP(3),
     "clientId" TEXT NOT NULL,
 
     CONSTRAINT "Tasks_pkey" PRIMARY KEY ("id")
@@ -30,7 +30,7 @@ CREATE TABLE "Tasks" (
 CREATE TABLE "TransitoInicioDeObra" (
     "id" TEXT NOT NULL,
     "inicio" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "chegada" TIMESTAMP(3) NOT NULL,
+    "chegada" TIMESTAMP(3),
     "tasksId" TEXT,
 
     CONSTRAINT "TransitoInicioDeObra_pkey" PRIMARY KEY ("id")
@@ -40,7 +40,7 @@ CREATE TABLE "TransitoInicioDeObra" (
 CREATE TABLE "TransitoFinalDeObra" (
     "id" TEXT NOT NULL,
     "inicio" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "chegada" TIMESTAMP(3) NOT NULL,
+    "chegada" TIMESTAMP(3),
     "tasksId" TEXT,
 
     CONSTRAINT "TransitoFinalDeObra_pkey" PRIMARY KEY ("id")
