@@ -10,6 +10,7 @@ datasource db {
 
 model Clients {
   id        String    @id @default(uuid())
+  userId    String
   name      String
   city      String
   status    String
@@ -32,6 +33,8 @@ model Tasks {
   client               Clients                @relation(fields: [clientId], references: [id], onDelete: Cascade)
   TransitoInicioDeObra TransitoInicioDeObra[]
   TransitoFinalDeObra  TransitoFinalDeObra[]
+  Obra                 Obra[]
+  PartialCompletion    PartialCompletion[]
 }
 
 model TransitoInicioDeObra {
@@ -48,4 +51,27 @@ model TransitoFinalDeObra {
   fim     DateTime? @map("chegada")
   tasksId String
   Tasks   Tasks?    @relation(fields: [tasksId], references: [id], onDelete: Cascade)
+}
+
+model PartialCompletion {
+  id        String    @id @default(uuid())
+  obs       String
+  inicio    DateTime? @map("inicio")
+  fim       DateTime? @map("fim")
+  completed Boolean
+  tasksId   String
+  Tasks     Tasks?    @relation(fields: [tasksId], references: [id], onDelete: Cascade)
+}
+
+model Obra {
+  id                String    @id @default(uuid())
+  goingToWork       DateTime? @map("going_to_work")
+  arrivingAtWork    DateTime? @map("arriving_at_work")
+  workStarted       DateTime? @map("start_work")
+  endWork           DateTime? @map("end_work")
+  leavingForWork    DateTime? @map("leaving_for_work")
+  arrivingAtCompany DateTime? @map("arriving_at_company")
+
+  tasksId String
+  Tasks   Tasks? @relation(fields: [tasksId], references: [id], onDelete: Cascade)
 }

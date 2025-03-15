@@ -7,7 +7,7 @@ const client = new Client()
 export const createClient = server.post(
   '/client',
   async ({ body, error }) => {
-    const { name, city, completed, status } = body
+    const { name, city, completed, status, userId } = body
 
     const statusOptions = await new Promise<string>((resolve, reject) => {
       switch (status) {
@@ -37,6 +37,7 @@ export const createClient = server.post(
       city,
       completed,
       status: statusOptions,
+      userId,
     })
 
     if (createClient.error) {
@@ -54,6 +55,7 @@ export const createClient = server.post(
   },
   {
     body: t.Object({
+      userId: t.String(),
       name: t.String(),
       city: t.String(),
       status: t.String(),

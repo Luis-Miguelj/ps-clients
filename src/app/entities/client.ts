@@ -8,7 +8,7 @@ import { prisma } from '@/utils/prisma'
 
 export class Client {
   async createClient(data: client) {
-    const { name, city, completed, status } = clientSchema.parse(data)
+    const { name, city, completed, status, userId } = clientSchema.parse(data)
 
     const newClient = await prisma.clients.create({
       data: {
@@ -16,6 +16,7 @@ export class Client {
         city,
         completed,
         status,
+        userId,
       },
     })
 
@@ -103,6 +104,24 @@ export class Client {
 
     return {
       client,
+    }
+  }
+
+  async deleteClient(id: string) {
+    const client = await prisma.clients.delete({
+      where: {
+        id,
+      },
+    })
+
+    if (!client) {
+      return {
+        error: 'Erro ao deletar cliente',
+      }
+    }
+
+    return {
+      success: 'Cliente deletado com sucesso',
     }
   }
 }

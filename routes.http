@@ -2,15 +2,13 @@ POST http://localhost:3005/client
 Content-Type: application/json
 
 {
+    "userId":"b1bbb971-1d95-431e-b73d-2e7877782920",
     "name": "Client 1",
     "city": "City 1",
-    "status": "Status 1",
+    "status": "a",
     "completed": true
 }
 
-###
-GET http://localhost:3005/client
-Content-Type: application/json
 
 ###
 PUT http://localhost:3005/update-task/087da0f0-9470-4ac4-bb5f-9ef448b8537e
@@ -21,4 +19,13 @@ Content-Type: application/json
   "types": "m",
   "obs": "",
   "description": "Limpeza de placas e verificação de conexões"
+}
+
+
+###
+POST http://localhost:3005/obras/partial-completed/14355069-61e5-4ef2-87e7-67fbde2306de
+Content-Type: application/json
+
+{
+  "obs": "Teste de observação" 
 }

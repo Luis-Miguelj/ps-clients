@@ -1,3 +1,4 @@
+// import { obraSchema, type Obra } from '@/types/type-obra'
 import { prisma } from '@/utils/prisma'
 export class Obras {
   async start(id: string) {

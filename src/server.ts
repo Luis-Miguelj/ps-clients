@@ -13,7 +13,8 @@ import { getClientById } from '@/infra/clients/get-client-by-id'
 import { inicioObras } from '@/infra/obras/start-obra'
 import { updateObras } from '@/infra/obras/update-obra'
 import { endObra } from '@/infra/obras/end-obra'
-import { getStatusObra } from './infra/obras/get-status-obra'
+import { getStatusObra } from '@/infra/obras/get-status-obra'
+import { startPartialCompleted } from '@/infra/obras/partial-completed/start-partial-completed'
 
 const server = new Elysia()
   .use(
@@ -34,6 +35,7 @@ const server = new Elysia()
   .use(updateObras)
   .use(endObra)
   .use(getStatusObra)
+  .use(startPartialCompleted)
 
 server.listen(3005, () => {
   console.log('Server is running on port 3005')

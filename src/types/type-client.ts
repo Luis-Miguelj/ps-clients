@@ -5,6 +5,7 @@ export const clientSchema = z.object({
   city: z.string(),
   status: z.string(),
   completed: z.boolean(),
+  userId: z.string().uuid(),
 })
 
 export const updateClientSchema = z.object({
